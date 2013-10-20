@@ -9,8 +9,8 @@ echo $this->Form->select('top_team_id', $team_names);
 <h4>Bottom Team</h4>
 <?php
 echo $this->Form->select('bottom_team_id', $team_names);
-echo $this->Form->end('PLAYBALL');
+echo $this->Form->end('PLAYBALL!');
 ?>
 
-<h2>Game Detail</h2>
+<h2>Debug</h2>
 <?php debug($this->request);  ?>

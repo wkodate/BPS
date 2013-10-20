@@ -14,4 +14,11 @@ class TeamsController extends AppController {
         )));
     }
 
+    public function pennant() {
+        $this->set("title_for_layout", $this->app_name . ' - ' . 'ペナント設定');
+        $this->set("teams", $this->Team->find('all'));
+        $this->set("team_names", $this->Team->find('list', array(
+            'fields' =>  array('Team.team_name')
+        )));
+    }
 }

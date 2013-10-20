@@ -5,8 +5,12 @@ echo $this->Form->input('top_team_id', array('type'=>'hidden', 'value'=>$top_tea
 echo $this->Form->input('bottom_team_id', array('type'=>'hidden', 'value'=>$bottom_team_id));
 echo $this->Form->input('top_score', array('type'=>'hidden', 'value'=>$game_result_detail->score['top']['total']));
 echo $this->Form->input('bottom_score', array('type'=>'hidden', 'value'=>$game_result_detail->score['bottom']['total']));
-
 echo $this->Form->end('Save');
+?>
+
+<?php
+echo $this->Form->create(null, array('url'=>array('controller'=>'homes', 'action'=>'index')));
+echo $this->Form->end('Back to Home');
 ?>
 
 <h2>Score</h2>
@@ -60,5 +64,5 @@ echo $this->Form->end('Save');
 </tbody>
 </table>
 
-<h2>Game Detail</h2>
+<h2>Debug</h2>
 <?php debug($this); ?>

@@ -17,6 +17,11 @@ class GameResult extends AppModel {
     var $batterStatsMatrix;
     var $batterInningMx;
 
+    #########################################################################
+    #
+    /**
+     * 定数を定義
+     */
     const HITS = 12;
     const MISHITS = 35; 
     const OTHERS = 6;
@@ -72,6 +77,7 @@ class GameResult extends AppModel {
             'error'     => 1,
             'mercyRule' => 0
         );
+        /**
         $this->teamInfo = array(
             'order' => array(
                 'top' => array(
@@ -152,10 +158,12 @@ class GameResult extends AppModel {
                 )
             )
         );
+         */
 
-        // 試合開始
+        // 試合開始 コンストラクタで実行しない
         $this->start();
     }
+
 
     public function start() {
 
