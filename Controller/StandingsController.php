@@ -11,8 +11,8 @@ class StandingsController extends AppController {
         $this->set("standings", $this->Standing->find('all'));
         $this->set("game_results", $this->GameResult->find('all'));
 
-        if (isset($this->request->data['Standings'])) {
-            if ($this->Standings->save($this->request->data)) {
+        if (isset($this->request->data['Standing'])) {
+            if ($this->Standing->save($this->request->data)) {
                 $this->Session->setFlash('Success!!');
                 $this->redirect(array('controller'=>'homes', 'action'=>'index'));
             } else {
@@ -21,56 +21,39 @@ class StandingsController extends AppController {
             return;
         }
 
-        $team_1_id = $this->request->data['Team']['team_1_id'];
-        $team_1_name = $this->Team->find('first', array(
-            'conditions' =>  array('Team.id'  =>  $team_1_id),
-            'fields' =>  array('Team.team_name')
-        ));
-        $team_2_id = $this->request->data['Team']['team_2_id'];
-        $team_2_name = $this->Team->find('first', array(
-            'conditions' =>  array('Team.id'  =>  $team_2_id),
-            'fields' =>  array('Team.team_name')
-        ));
-        $team_3_id = $this->request->data['Team']['team_3_id'];
-        $team_3_name = $this->Team->find('first', array(
-            'conditions' =>  array('Team.id'  =>  $team_3_id),
-            'fields' =>  array('Team.team_name')
-        ));
-        $team_4_id = $this->request->data['Team']['team_4_id'];
-        $team_4_name = $this->Team->find('first', array(
-            'conditions' =>  array('Team.id'  =>  $team_4_id),
-            'fields' =>  array('Team.team_name')
-        ));
-        $team_5_id = $this->request->data['Team']['team_5_id'];
-        $team_5_name = $this->Team->find('first', array(
-            'conditions' =>  array('Team.id'  =>  $team_5_id),
-            'fields' =>  array('Team.team_name')
-        ));
-        $team_6_id = $this->request->data['Team']['team_6_id'];
-        $team_6_name = $this->Team->find('first', array(
-            'conditions' =>  array('Team.id'  =>  $team_6_id),
-            'fields' =>  array('Team.team_name')
-        ));
+        for ($lg=1;$lg<=2;$lg++) {
+            for ($tm=1;$tm<=6;$tm++) {
+                $lgtm = 'lg'.$lg.'tm'.$tm;
+                ${$lgtm.'_id'} = $this->request->data['Team'][$lgtm];
+                ${$lgtm.'_name'} = $this->Team->find('first', array(
+                    'conditions' =>  array('Team.id'  =>  ${$lgtm.'_id'}),
+                    'fields' =>  array('Team.team_name')
+                ));
+            }
+        }
+        $lg1_team_id = array($lg1tm1_id, $lg1tm2_id, $lg1tm3_id, 
+            $lg1tm4_id, $lg1tm5_id, $lg1tm6_id); 
+        $lg2_team_id = array($lg2tm1_id, $lg2tm2_id, $lg2tm3_id, 
+            $lg2tm4_id, $lg2tm5_id, $lg2tm6_id); 
 
-        $team_id = array(
-            $team_1_id,
-            $team_2_id,
-            $team_3_id,
-            $team_4_id,
-            $team_5_id,
-            $team_6_id
-        ); 
-
-        $team_id_name = array(
-            $team_1_id => $team_1_name['Team']['team_name'],
-            $team_2_id => $team_2_name['Team']['team_name'],
-            $team_3_id => $team_3_name['Team']['team_name'],
-            $team_4_id => $team_4_name['Team']['team_name'],
-            $team_5_id => $team_5_name['Team']['team_name'],
-            $team_6_id => $team_6_name['Team']['team_name']
+        $lg1_team_id_name = array(
+            $lg1tm1_id => $lg1tm1_name['Team']['team_name'],
+            $lg1tm2_id => $lg1tm2_name['Team']['team_name'],
+            $lg1tm3_id => $lg1tm3_name['Team']['team_name'],
+            $lg1tm4_id => $lg1tm4_name['Team']['team_name'],
+            $lg1tm5_id => $lg1tm5_name['Team']['team_name'],
+            $lg1tm6_id => $lg1tm6_name['Team']['team_name'],
+        );
+        $lg2_team_id_name = array(
+            $lg2tm1_id => $lg2tm1_name['Team']['team_name'],
+            $lg2tm2_id => $lg2tm2_name['Team']['team_name'],
+            $lg2tm3_id => $lg2tm3_name['Team']['team_name'],
+            $lg2tm4_id => $lg2tm4_name['Team']['team_name'],
+            $lg2tm5_id => $lg2tm5_name['Team']['team_name'],
+            $lg2tm6_id => $lg2tm6_name['Team']['team_name'],
         );
 
-        $standing_obj = new Standing($team_id);
+        $standing_obj = new Standing($lg1_team_id);
 
         # ここからペナント実行
         $game_count = 1;
@@ -105,8 +88,10 @@ class StandingsController extends AppController {
         $standing_obj->calcGameBehind(); 
 
         $this->set('standings', $standing_obj->getStandings());
-        $this->set('team_id', $team_id);
-        $this->set('team_id_name', $team_id_name);
+        $this->set('lg1_team_id', $lg1_team_id);
+        $this->set('lg2_team_id', $lg2_team_id);
+        $this->set('lg1_team_id_name', $lg1_team_id_name);
+        $this->set('lg2_team_id_name', $lg2_team_id_name);
     }
 
 }
