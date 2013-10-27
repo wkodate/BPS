@@ -1,7 +1,20 @@
-<h2>Select Pennant Team</h2>
+<h2>Pennant</h2>
 <?php
 echo $this->Form->create(null, array('url'=>array('controller'=>'standings', 'action'=>'index')));
 ?>
+<table>
+<thead>
+<tr>
+<th colspan=2>Pennant Settings</th>
+</tr>
+</thead>
+<tr>
+<td>Games</td>
+<td>
+<?php echo $this->Form->select('games', array(25=>25, 50=>50, 75=>75, 100=>100, 125=>125), array("value" => 125)); ?>
+</td>
+</tr>
+</table>
 
 <table>
 <thead>

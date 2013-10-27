@@ -21,6 +21,8 @@ class StandingsController extends AppController {
             return;
         }
 
+        $games = $this->request->data['Team']['games'];
+
         for ($lg=1;$lg<=2;$lg++) {
             for ($tm=1;$tm<=6;$tm++) {
                 $lgtm = 'lg'.$lg.'tm'.$tm;
@@ -57,7 +59,7 @@ class StandingsController extends AppController {
 
         # ここからペナント実行
         $game_count = 1;
-        $standing_obj->initStandings();
+        $standing_obj->initStandings($games);
         while (1) {
                     
             # 対戦するチームの決定
@@ -77,7 +79,7 @@ class StandingsController extends AppController {
 
             # 全試合終了したらループを抜ける
             $game_count++;
-            if($game_count > $standing_obj->getGameTotalCount()) break;
+            if($game_count > ($games*count($lg1_team_id)/2)) break;
 
         }
         # 勝率を計算

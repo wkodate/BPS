@@ -11,15 +11,12 @@ class Standing extends AppModel {
      * コンストラクタ
      */
     public function __construct($teamid) {
-        parent::__construct();
+        parent::__construct($teamid);
 
         $this->team_id = $teamid;
-        $this->game_total_count = 0;
-        # 今は一度の対戦のみ
         for ($i=0; $i<count($teamid); $i++) {
             for ($j=$i+1; $j<count($teamid); $j++) {
-                $this->match_list[$i][$j] = false;
-                $this->game_total_count++;
+                $this->match_list[$i][$j] = 0;
             }
         }
     }
@@ -27,7 +24,8 @@ class Standing extends AppModel {
     /**
      * 順位の初期化
      */
-    public function initStandings() {
+    public function initStandings($games) {
+        $this->game_total_count = $games;
         for ($i=0; $i<count($this->team_id); $i++) {
             $this->standings[$i] = array(
                 "team_id" => $this->team_id[$i],
@@ -44,13 +42,12 @@ class Standing extends AppModel {
     public function getMatchTeams() {
         for ($i=0; $i<count($this->team_id); $i++) {
             for ($j=$i+1; $j<count($this->team_id); $j++) {
-                # match_listからまだ試合を行っていないペアを選択
-                if (!$this->match_list[$i][$j]) {
+                if ($this->match_list[$i][$j]<($this->game_total_count/(count($this->team_id)-1))) {
                     $match_team_id = array(
                         'top'    => $this->team_id[$i],
                         'bottom' => $this->team_id[$j]
                     );
-                    $this->match_list[$i][$j] = true;
+                    $this->match_list[$i][$j]++;
                     break 2;
                 }
                 # すべての試合が終了してる場合
