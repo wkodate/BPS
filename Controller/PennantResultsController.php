@@ -1,18 +1,18 @@
 <?php
 
-class StandingsController extends AppController {
+class PennantResultsController extends AppController {
     //public $scaffold;
     private $app_name = 'BPS';
     public $helper = array('Html', 'Form');
-    public $uses = array('Standing', 'GameResult', 'Team');
+    public $uses = array('PennantResult', 'GameResult', 'Team');
 
     public function index() {
         $this->set("title_for_layout", $this->app_name . ' - ' . 'ペナント結果');
-        $this->set("standings", $this->Standing->find('all'));
+        $this->set("pennant_results", $this->PennantResult->find('all'));
         $this->set("game_results", $this->GameResult->find('all'));
 
-        if (isset($this->request->data['Standing'])) {
-            if ($this->Standing->save($this->request->data)) {
+        if (isset($this->request->data['PennantResult'])) {
+            if ($this->PennantResult->save($this->request->data)) {
                 $this->Session->setFlash('Success!!');
                 $this->redirect(array('controller'=>'homes', 'action'=>'index'));
             } else {
@@ -55,7 +55,7 @@ class StandingsController extends AppController {
             $lg2tm6_id => $lg2tm6_name['Team']['team_name'],
         );
 
-        $standing_obj = new Standing($lg1_team_id);
+        $standing_obj = new PennantResult($lg1_team_id);
 
         # ここからペナント実行
         $game_count = 1;
@@ -89,6 +89,7 @@ class StandingsController extends AppController {
         # ゲーム差を計算
         $standing_obj->calcGameBehind(); 
 
+        $this->set('games', $games);
         $this->set('standings', $standing_obj->getStandings());
         $this->set('lg1_team_id', $lg1_team_id);
         $this->set('lg2_team_id', $lg2_team_id);

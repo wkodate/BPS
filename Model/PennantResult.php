@@ -1,6 +1,6 @@
 <?php
 
-class Standing extends AppModel {
+class PennantResult extends AppModel {
 
     private $team_id;
     private $match_list;

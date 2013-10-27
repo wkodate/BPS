@@ -1,6 +1,8 @@
 <h2>Standings</h2>
 <?php
-echo $this->Form->create('Standing');
+echo $this->Form->create('PennantResult');
+echo $this->Form->input('league_id', array('type'=>'hidden', 'value'=>3));
+echo $this->Form->input('games', array('type'=>'hidden', 'value'=>$games));
 echo $this->Form->input('team_1_id', array('type'=>'hidden', 'value'=>$lg1_team_id[0]));
 echo $this->Form->input('wins_1', array('type'=>'hidden', 'value'=>$standings[0]['wins']));
 echo $this->Form->input('losses_1', array('type'=>'hidden', 'value'=>$standings[0]['losses']));

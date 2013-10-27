@@ -1,6 +1,6 @@
 <h2>Pennant</h2>
 <?php
-echo $this->Form->create(null, array('url'=>array('controller'=>'standings', 'action'=>'index')));
+echo $this->Form->create(null, array('url'=>array('controller'=>'pennant_results', 'action'=>'index')));
 ?>
 <table>
 <thead>
