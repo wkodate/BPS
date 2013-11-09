@@ -7,8 +7,8 @@ class Game extends AppModel {
     private $runner;
 
     //試合前に決定する情報
-    var $gameInfo;
-    var $teamInfo;
+    private $gameInfo;
+    private $teamInfo;
 
     //試合後に必要な情報
     var $score;
@@ -17,56 +17,12 @@ class Game extends AppModel {
     var $batterStatsMatrix;
     var $batterInningMx;
 
-    #########################################################################
-    #
-    /**
-     * 定数を定義
-     */
-    const HITS = 12;
-    const MISHITS = 35; 
-    const OTHERS = 6;
-    // 和
-    const TOTAL_PLATE_APPEARANCES = 53;
-     
-    //0~100: 本塁打, 101~120: 3塁打, 121~300: 2塁打, 301~1200: 単打
-    const HOMERUNS = 100;
-    const TRIPLES  = 20; 
-    const DOUBLES  = 180;
-    const SINGLES  = 900;
-    // 和
-    const HITS_TOTAL = 1200;
-    // HITS_TOTAL - SINGLES
-    const SINGLES_RANGE = 300;
-    // HITS_TOTAL - (SINGLES+DOUBLES)
-    const DOUBLES_RANGE = 120;
-    // HITS_TOTAL - (SINGLES+DOUBLES+TRIPLES)
-    const TRIPLES_RANGE = 100;
-
-    ////凡打の内訳
-    ////ゴロ、フライ、ライナー、併殺、三振
-    const STRIKEOUTS = 25; 
-    const GROUND_OUTS = 40; 
-    const LINER_OUTS = 8;
-    const FLY_OUTS = 27; 
-    const GROUNDED_INTO_DOUBLE_PLAYS = 0;
-    // 和
-    const MISHITS_TOTAL = 100;
-    //その他の内訳
-    //四球、死球、犠打、犠飛、失策、野手選択
-    const BASES_ON_BALLS = 18; 
-    const HIT_BY_PITCH = 2;
-    const SACRIFICE_BUNTS = 0;
-    const SACRIFICE_FLIES = 0;
-    const ERRORS = 0;
-    const FIELDERS_CHOICE = 0;
-    // 和
-    const OTHERS_TOTAL = 20;
-
     /**
      * コンストラクタ
      */
     public function __construct() {
         parent::__construct();
+
 
         $this->gameInfo = array(
             'gameid'    => 1, 
@@ -167,6 +123,12 @@ class Game extends AppModel {
 
     public function start() {
 
+        # 試合開始時の初期化
+        $pa      = Configure::read("pa");
+        $hits    = Configure::read("hits");
+        $mishits = Configure::read("mishits");
+        $others  = Configure::read("others");
+
         $inning = 1;
         $topBottom = 'top';
         $orderNum;
@@ -194,14 +156,14 @@ class Game extends AppModel {
         while(1) {
             //
             //打撃結果
-            $resultAtBat = rand(0, self::TOTAL_PLATE_APPEARANCES-1);
+            $resultAtBat = rand(0, $pa['PLATE_APPEARANCES']-1);
 
-            if ($resultAtBat < self::HITS ) {
+            if ($resultAtBat < $pa['HITS']) {
                 //安打の種類を決定
                 $direction;
-                $kind_of_hits = rand(1, self::HITS_TOTAL);
+                $kind_of_hits = rand(1, $hits['HITS_TOTAL']);
 
-                if ($kind_of_hits < self::SINGLES) {
+                if ($kind_of_hits < $hits['SINGLES']) {
 
                     //単打
                     if ($this->runner[3] == true) {
@@ -225,7 +187,7 @@ class Game extends AppModel {
                     }
                     $kind_of_hits = 1;
 
-                } else if ($kind_of_hits < (self::SINGLES + self::DOUBLES)) {
+                } else if ($kind_of_hits < ($hits['SINGLES'] + $hits['DOUBLES'])) {
 
                     //二塁打
                     if($this->runner[3] == true) {
@@ -247,7 +209,7 @@ class Game extends AppModel {
                     $direction = rand(7,9);
                     $kind_of_hits = 2;
 
-                } else if ($kind_of_hits < (self::SINGLES + self::DOUBLES + self::TRIPLES)) {
+                } else if ($kind_of_hits < ($hits['SINGLES'] + $hits['DOUBLES'] + $hits['TRIPLES'])){
 
                     //三塁打
                     if($this->runner[3] == true) {
@@ -293,13 +255,13 @@ class Game extends AppModel {
 
                 $result_in_detail = 10 * $direction + $kind_of_hits;
 
-            } else if ($resultAtBat < (self::HITS + self::MISHITS)) { 
+            } else if ($resultAtBat < ($pa['HITS'] + $pa['MISHITS'])) { 
                 //凡打の種類を決定
-                $kind_of_mishits_rand = rand(1, self::MISHITS_TOTAL);
+                $kind_of_mishits_rand = rand(1, $mishits['MISHITS_TOTAL']);
                 $kind_of_mishits;
                 $direction;
 
-                if ($kind_of_mishits_rand < self::STRIKEOUTS) {
+                if ($kind_of_mishits_rand < $mishits['STRIKEOUTS']) {
                     //三振の種類
                     //振り逃げは今後
                     $direction = 10;
@@ -307,7 +269,7 @@ class Game extends AppModel {
 
                 } else {
                     //凡打の方向を決定
-                    if ($kind_of_mishits_rand < (self::STRIKEOUTS + self::GROUND_OUTS)) {
+                    if ($kind_of_mishits_rand < ($mishits['STRIKEOUTS'] + $mishits['GROUND_OUTS'])) {
 
                         //ゴロ
                         $direction_rand = rand(2, 6);
@@ -319,7 +281,7 @@ class Game extends AppModel {
                         $kind_of_mishits = 5;
 
                     } else if ($kind_of_mishits_rand 
-                        < (self::STRIKEOUTS + self::GROUND_OUTS + self::LINER_OUTS)) {
+                        < ($mishits['STRIKEOUTS'] + $mishits['GROUND_OUTS'] + $mishits['LINER_OUTS'])) {
 
                             //ライナー
                             $direction_rand = rand(2, 6);

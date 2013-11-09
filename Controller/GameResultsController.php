@@ -40,7 +40,8 @@ class GameResultsController extends AppController {
 
     # Gameオブジェクト生成
     public function setGame() {
-        APP::import('Model', 'Game');
+        # Gameモデルの呼び出し
+        App::import('Model', 'Game');
         $this->Game = new Game(); 
     }
 
