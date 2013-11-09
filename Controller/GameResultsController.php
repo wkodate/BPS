@@ -4,17 +4,18 @@ class GameResultsController extends AppController {
     //public $scaffold;
     private $app_name = 'BPS';
     public $helper = array('Html', 'Form');
-    public $uses = array('GameResult', 'Team');
+    public $uses = array('GameResult', 'Team', 'Game');
+    public $Game;
 
     public function index() {
         $this->set("title_for_layout", $this->app_name . ' - ' . '試合結果');
-        $this->set("game_results", $this->GameResult->find('all'));
-        $this->set('game_result_detail', new GameResult());
+        $this->setGame();
+        $this->set('game_result_detail', $this->Game);
 
         if (isset($this->request->data['GameResult'])) {
             if ($this->GameResult->save($this->request->data)) {
                 $this->Session->setFlash('Success!!');
-                $this->redirect(array('controller'=>'teams', 'action'=>'index'));
+                $this->redirect(array('controller'=>'homes', 'action'=>'index'));
             } else {
                 $this->Session->setFlash('Failed!!');
             }
@@ -35,6 +36,12 @@ class GameResultsController extends AppController {
             $this->set('top_team_name', $top_team_name['Team']['team_name']);
             $this->set('bottom_team_name', $bottom_team_name['Team']['team_name']);
         }
+    }
+
+    # Gameオブジェクト生成
+    public function setGame() {
+        APP::import('Model', 'Game');
+        $this->Game = new Game(); 
     }
 
 }

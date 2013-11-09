@@ -1,6 +1,11 @@
 <h2>Select Your Team</h2>
 <?php
-echo $this->Form->create(null, array('url'=>array('controller'=>'game_results', 'action'=>'index')));
+if ($mode == 1) {
+    echo $this->Form->create(null, array('url'=>array('controller'=>'normal_games', 'action'=>'index')));
+} else {
+    echo $this->Form->create(null, array('url'=>array('controller'=>'game_results', 'action'=>'index')));
+}
+
 ?>
 <h4>Top Team</h4>
 <?php
