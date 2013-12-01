@@ -3,9 +3,7 @@
 echo $this->Form->create(null, array('url'=>array('controller'=>'teams', 'action'=>'index')));
 echo $this->Form->input('mode', array('type'=>'hidden', 'value'=>1));
 echo $this->Form->end('NormalGame');
-?>
 
-<?php
 echo $this->Form->create(null, array('url'=>array('controller'=>'teams', 'action'=>'skip')));
 echo $this->Form->input('mode', array('type'=>'hidden', 'value'=>2));
 echo $this->Form->end('SkipGame');

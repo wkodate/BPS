@@ -9,8 +9,6 @@ class GameResultsController extends AppController {
 
     public function index() {
         $this->set("title_for_layout", $this->app_name . ' - ' . '試合結果');
-        $this->setGame();
-        $this->set('game_result_detail', $this->Game);
 
         if (isset($this->request->data['GameResult'])) {
             if ($this->GameResult->save($this->request->data)) {
@@ -20,6 +18,8 @@ class GameResultsController extends AppController {
                 $this->Session->setFlash('Failed!!');
             }
         } else {
+            $this->setGame();
+            $this->set('game_result_detail', $this->Game);
             $top_team_id = $this->request->data['Team']['top_team_id'];
             $bottom_team_id = $this->request->data['Team']['bottom_team_id'];
             $top_team_name = $this->Team->find('first', array(

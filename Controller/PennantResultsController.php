@@ -7,7 +7,7 @@ class PennantResultsController extends AppController {
     public $uses = array('PennantResult', 'GameResult', 'Team');
 
     public function index() {
-        $this->set("title_for_layout", $this->app_name . ' - ' . 'ペナント結果');
+        $this->set("title_for_layout", $this->app_name . ' - ' . 'Pennant Result');
         $this->set("pennant_results", $this->PennantResult->find('all'));
         $this->set("game_results", $this->GameResult->find('all'));
 

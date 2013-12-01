@@ -1,7 +1,7 @@
 <h2>Select Your Team</h2>
 <?php
 if ($mode == 1) {
-    echo $this->Form->create(null, array('url'=>array('controller'=>'normal_games', 'action'=>'index')));
+    echo $this->Form->create(null, array('url'=>array('controller'=>'games', 'action'=>'index')));
 } else {
     echo $this->Form->create(null, array('url'=>array('controller'=>'game_results', 'action'=>'index')));
 }
