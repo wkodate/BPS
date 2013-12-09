@@ -4,10 +4,7 @@ class Score
 {
     public $useTable = false;
 
-    const TOP    = 1;
-    const BOTTOM = 2;
-    private $topScore;
-    private $bottomScore;
+    private $score;
 
     public function __construct() 
     {
@@ -15,33 +12,23 @@ class Score
         $this->bottomScore = 0;
     }
 
-    public function setScore($score, $topBottom) 
+    public function set($score) 
     {
-        if ($topBottom == self::TOP) {
-            $this->topScore = $score;
-        } elseif ($topBottom == self::BOTTOM) {
-            $this->bottomScore = $score;
-        } 
+        $this->score = $score;
     }
 
-    public function getScore($topBottom=null) 
+    public function get() 
     {
-        if (is_null($topBottom)) {
-            return array($this->topScore, $this->bottomScore);
-        } elseif ($topBottom == self::TOP) {
-            return $this->topScore;
-        } elseif ($topBottom == self::BOTTOM) {
-            return $this->bottomScore;
-        } 
-        return;
+        return $this->score;
     }
 
-    public function incrementScore($topBottom) 
+    public function increment() 
     {
-        if ($topBottom == self::TOP) {
-            $this->topScore++;
-        } elseif ($topBottom == self::BOTTOM) {
-            $this->bottomScore++;
-        } 
+        $this->score++;
+    }
+
+    public function reset() 
+    {
+        $this->score = 0;
     }
 }
