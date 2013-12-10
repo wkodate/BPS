@@ -12,22 +12,22 @@ class Score
         $this->bottomScore = 0;
     }
 
-    public function set($score) 
+    public function setScore($score) 
     {
         $this->score = $score;
     }
 
-    public function get() 
+    public function getScore() 
     {
         return $this->score;
     }
 
-    public function increment() 
+    public function incrementScore() 
     {
         $this->score++;
     }
 
-    public function reset() 
+    public function resetScore() 
     {
         $this->score = 0;
     }
