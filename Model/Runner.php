@@ -4,9 +4,9 @@ class Runner
 {
     public $useTable = false;
 
-    const FIRST  = 1;
-    const SECOND = 2;
-    const THIRD  = 3;
+    const FIRST  = 0;
+    const SECOND = 1;
+    const THIRD  = 2;
 
     private $runner;
 
