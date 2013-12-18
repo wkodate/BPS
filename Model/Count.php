@@ -26,22 +26,7 @@ class Count
 
     public function out() 
     {
-        $this->ball   = 0; 
-        $this->strike = 0; 
         $this->out++;
-    }
-
-    public function resetBallCount() 
-    {
-        $this->ball   = 0; 
-        $this->strike = 0; 
-    }
-
-    public function resetOutCount() 
-    {
-        $this->ball   = 0; 
-        $this->strike = 0; 
-        $this->out = 0; 
     }
 
     public function getBall() 
@@ -62,6 +47,20 @@ class Count
     public function getCount() 
     {
         return array($this->ball, $this->strike, $this->out);
+    }
+
+
+    public function resetBSCount() 
+    {
+        $this->ball   = 0; 
+        $this->strike = 0; 
+    }
+
+    public function resetCount() 
+    {
+        $this->ball   = 0; 
+        $this->strike = 0; 
+        $this->out    = 0; 
     }
 
 }
