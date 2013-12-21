@@ -8,8 +8,7 @@ class Score
 
     public function __construct() 
     {
-        $this->topScore    = 0;
-        $this->bottomScore = 0;
+        $this->score    = 0;
     }
 
     public function setScore($score) 
