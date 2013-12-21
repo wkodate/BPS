@@ -11,13 +11,15 @@ class Bat {
     private $Score;
     private $Runner;
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->Score  = new Score();
         $this->Runner = new Runner();
     }
 
     # 共通の変数
-    public function hits() {
+    public function hits() 
+    {
         $runner = $this->Runner->getAllRunner();
         for($i=self::THIRD; $i>=self::THIRD; $i--) {
             if ($runner[$i]) $this->Score->incrementScore();
@@ -25,7 +27,8 @@ class Bat {
         $this->Runner->singleRun();
     }
 
-    public function doubles() {
+    public function doubles() 
+    {
         $runner = $this->Runner->getAllRunner();
         for($i=self::THIRD; $i>=self::SECOND; $i--) {
             if ($runner[$i]) $this->Score->incrementScore();
@@ -33,7 +36,8 @@ class Bat {
         $this->Runner->doubleRun();
     }
 
-    public function triples() {
+    public function triples() 
+    {
         $runner = $this->Runner->getAllRunner();
         for($i=self::THIRD; $i>=self::FIRST; $i--) {
             if ($runner[$i]) $this->Score->incrementScore();
@@ -41,21 +45,25 @@ class Bat {
         $this->Runner->tripleRun();
     }
 
-    public function getAllRunner() {
+    public function getAllRunner() 
+    {
         return $this->Runner->getAllRunner();
     }
 
-    public function getScore() {
+    public function getScore() 
+    {
         return $this->Score->getScore();
     }
     
-    public function printRunner() {
+    public function printRunner() 
+    {
         $runner = $this->Runner->getAllRunner();
         echo '[1]' . $runner[self::FIRST] . "\n"
             .'[2]' . $runner[self::SECOND] . "\n"
             .'[3]' . $runner[self::THIRD] . "\n";
     }
-    public function printScore() {
+    public function printScore() 
+    {
         echo '[SCORE]' . $this->Score->getScore(), "\n";
     }
 }
